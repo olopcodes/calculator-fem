@@ -1,0 +1,13 @@
+$red: red;
+// import google font before
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+@import 'variables';
+@import 'mixins';
+@import 'reset';
+@import 'typography';
+@import 'btn';
+@import 'general';
+@import 'layout';
+@import 'dark-theme';
+
