@@ -1,0 +1,182 @@
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: $font-fam;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+}
+
+.wrapper {
+    width: 90%;
+    max-width: 37rem;
+}
+
+.calculator {
+    &__body {
+        font-size: 3.2rem;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap: 1rem;
+    }
+
+    &__body div {
+        display: grid;
+        place-items: center;
+        height: 7rem;
+        background-color: antiquewhite;
+        border-radius: 5px;
+        cursor: pointer;
+
+        // grid-template-areas:
+                // "clear back neg div"
+                // "nine eight seven mult"
+                // "six five four sub"
+                // "three two one add"
+                // "zero dec eq eq";
+    }
+
+    &__neg-pos,
+    &__clear,
+    &__backspace {
+        font-size: 2.5rem;
+    }
+
+    &__neg-pos {
+        position: relative;
+    }
+
+    &__neg-pos span:first-child {
+        position: absolute;
+        top: 1rem;
+    }
+
+    &__neg-pos span:last-child {
+        position: absolute;
+        bottom: 1rem;
+    }
+
+    // 0
+    &__body div:nth-of-type(1) {
+        grid-column: 2 / 3;
+        grid-row: 5 / 6;
+    }
+
+    // 1
+    &__body div:nth-of-type(2) {
+        grid-column: 3 / 4;
+        grid-row: 4 / 5;
+    }
+
+    // 2
+    &__body div:nth-of-type(3) {
+        grid-column: 2 / 3;
+        grid-row: 4 / 5;
+    }
+
+    // 3
+    &__body div:nth-of-type(4) {
+        grid-column: 1 / 2;
+        grid-row: 4 / 5;
+    }
+
+    // 4
+    &__body div:nth-of-type(5) {
+        grid-column: 3 / 4;
+        grid-row: 3 / 4;
+    }
+
+    // 5
+    &__body div:nth-of-type(6) {
+        grid-column: 2 / 3;
+        grid-row: 3 / 4;
+    }
+
+    // 6
+    &__body div:nth-of-type(7) {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+    }
+
+    // 7
+    &__body div:nth-of-type(8) {
+        grid-column: 3 / 4;
+        grid-row: 2 / 3;
+    }
+
+    // 8
+    &__body div:nth-of-type(9) {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+    }
+
+    // 9
+    &__body div:nth-of-type(10) {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+
+    // +
+    &__body div:nth-of-type(11) {
+        
+    }
+
+    // -
+    // &__body div:nth-of-type(12) {
+    //     grid-area: mult;
+    // }
+
+    // *
+    &__body div:nth-of-type(13) {
+        grid-column: 4 / 5;
+        grid-row: 2 / 3;
+    }
+
+    //   /
+    &__body div:nth-of-type(14) {
+        grid-column: 4 / 5;
+        grid-row: 1 / 2;
+    }
+
+        // .
+    &__body div:nth-of-type(15) {
+        grid-column: 1 / 2;
+        grid-row: 5 / 6;
+    }
+
+    // =
+    &__body div:nth-of-type(16) {
+        grid-column: 3 / 5;
+        grid-row: 5 / 6;
+    }
+
+    // neg
+    &__body div:nth-of-type(17) {
+        grid-column: 3 / 4;
+        grid-row: 1 / 2;
+    }
+
+    // clear
+    &__body div:nth-of-type(18) {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+    }
+
+    // back
+    &__body div:nth-of-type(19) {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+    }
+    
+}
+
