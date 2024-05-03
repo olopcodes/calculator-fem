@@ -83,7 +83,7 @@ html {
 
 * {
   box-sizing: inherit;
-  transition: all 0.3s ease;
+  transition: all 0.175s ease;
 }
 
 body {
@@ -176,12 +176,14 @@ body {
   border-radius: 50%;
   top: 50%;
   left: 50%;
+}
+.header .theme-toggler__btn.theme-one {
   transform: translate(-175%, -50%);
 }
-.header .theme-toggler__btn .theme-two {
+.header .theme-toggler__btn.theme-two {
   transform: translate(-50%, -50%);
 }
-.header .theme-toggler__btn .theme-three {
+.header .theme-toggler__btn.theme-three {
   transform: translate(85%, -50%);
 }
 
@@ -393,7 +395,7 @@ body {
   background-color: #dcc48e;
 }
 [data-theme=three] .theme-toggler__btn {
-  background-color: #eaefd3;
+  background-color: #6c795e;
 }
 [data-theme=three] .calculator__display {
   color: #eaefd3;

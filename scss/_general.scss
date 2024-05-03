@@ -6,7 +6,7 @@ html {
 
 * {
     box-sizing: inherit;
-    transition: all .3s ease;
+    transition: all .175s ease;
 
 }
 
@@ -113,14 +113,15 @@ body {
         top: 50%;
         left: 50%;
 
-        // for first one
-        transform: translate(-175%, -50%);
+        &.theme-one {
+            transform: translate(-175%, -50%);
+        }
 
-        .theme-two {
+        &.theme-two {
             transform: translate(-50%, -50%);
         }
 
-        .theme-three {
+        &.theme-three {
             transform: translate(85%, -50%);
         }
 
