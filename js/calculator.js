@@ -1,43 +1,62 @@
 const calculatorBodyEl = document.querySelector('.calculator__body');
-const calculatorDisplaytEl = document.querySelector('.calculator__display');
-const calculatorResultEl = document.querySelector('.calculator__result');
+const calculatorOutputEl = document.querySelector('.calculator__output');
 const calculator = {
-    result: 0,
-    display: [],
     number1: [],
     number2: [],
     operation: '',
+    result: 0,
 
-    getNumber() {
-        // this.number = +this.number1.join();
+    sum() {
+        this.result = +this.number1.join() + this.number2.join();
+    },
+
+    subtract() {
+        this.result = +this.number1.join() - this.number2.join();
+
+    },
+
+    divide() {
+        if(+this.number2.join() === 0) {
+            console.log('no divinding by 0 silly goose');
+            return
+        }
+
+        this.result = +this.number1.join() / this.number2.join();
+    },
+
+    multiply() {
+        this.result = +this.number1.join() * this.number2.join();
+    },
+
+    operate() {
 
     }
-
-
 };
 
 
 calculatorBodyEl.addEventListener('click', e => {
-    if(
-        calculator.display.length === 0 && 
-        e.target.classList.contains('calculator__operation-only')
-    ) {
-        return
+    // when number is clicked
+    if(e.target.classList.contains('calculator__num')) {
+        if(calculator.operation) {
+            calculator.number2.push(e.target.textContent);
+        } else {
+            calculator.number1.push(e.target.textContent);
+        }
+    } else if (e.target.classList.contains('calculator__operation')) {
+        // operation should not work if num1 is empty
+        if(calculator.number1.length === 0) return;
+        // if number 2 already selected, perform operation after operation is clicked again
+        calculator.operate();
+    } else if (e.target.classList.contains('calculator__clear')) {
+        calculator.number1 = [];
+        calculator.number2 = [];
+        calculator.result = 0;
     } else if (
         e.target.classList.contains('calculator__neg-pos') ||
         e.target.closest('div').classList.contains('calculator__neg-pos')
     ) {
-        // multiply number by -1
-        calculator.operation ? calculator.number2 *= -1 : calculator.number1 *= -1;
-    } else if (
-        e.target.classList.contains('calculator__decimal')
-    ) {
-        // check if number already has a decimal
+        console.log('neg/pos')
+    } else if (e.target.classList.contains('calculator__decimal')) {
         console.log('decimal')
-
-    } else {
-        calculator.number1.push(e.target.textContent);
-        calculator.setNumber()
-        console.log(calculator.number1);
     }
 })
