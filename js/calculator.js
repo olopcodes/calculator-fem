@@ -1,24 +1,16 @@
 const calculatorBodyEl = document.querySelector('.calculator__body');
 const calculatorOutputEl = document.querySelector('.calculator__output');
 const calculatorResultEl = document.querySelector('.calculator__result');
-
 const calculator = {
     arrNumber1: [],
     arrNumber2: [],
-    number1: 0,
-    number2: 0,
     operation: '',
     result: 0,
-
-    formatArrToNumber() {
-        this.number1 = Number(this.arrNumber1.join())
-        if(this.arrNumber2.length > 0) {
-            this.number2 = Number(this.arrNumber2.join());
-        } 
-    },
-
+    number1: null,
+    number2: null,
+    
     sum() {
-       this.result = this.number1 + this.number2;
+        this.result = this.number1 + this.number2;
     },
 
     subtract() {
@@ -26,111 +18,63 @@ const calculator = {
     },
 
     divide() {
-        if(this.number2 === 0) {
-            console.log('no divinding by 0 silly goose');
-            return
-        }
-
+        if(this.number2 === 0) console.log('not dividing by 0')
         this.result = this.number1 / this.number2;
     },
 
     multiply() {
-        this.result = this.number1 * this.number2;     
+        this.result = this.number1 * this.number2;
     },
 
-    operate() {
-        
-        this.formatArrToNumber();
-
-;        if(this.operation === '+') {
-            this.sum();
-        } else if (this.operation === '-') {
-            this.subtract();
-        } else if (this.operation === '/') {
-            this.divide();
-        } else if (this.operation === '*') {
-            this.multiply();
-        }
-
-        // if number is a decimal, fixed 2 spots
-        this.formatDecimalNumber();
+    formatArrToNumber() {
+        this.number1 = Number(this.arrNumber1.join(''))
+        if(this.arrNumber2.length > 0) {
+            this.number2 = Number(this.arrNumber2.join(''));
+        } 
     },
 
-    formatDecimalNumber() {
-        if(!Number.isInteger(this.number1)) {
-            this.number1 = Number(this.number1.toFixed(2).split(",").join(""));
-        } else if (!Number.isInteger(this.number2)) {
-            this.number2 = Number(this.number1.toFixed(2).split(",").join(""));
-        } else if (!Number(this.result)) {
-            Number(this.result = this.result.toFixed(2).split(",").join(""));
-        }
-    },
-
-    clearAll() {
-        // clearing values
-        this.arrNumber1 = [];
-        this.arrNumber2 = [];
-        this.number1 = 0;
-        this.number2 = 0;
-        this.operation = '';
-        this.result = 0;
-        calculatorOutputEl.textContent = '';
-        calculatorResultEl.textContent = '';
+    compute() {
+        if(this.operation === '+') this.sum();
+        if(this.operation === '-') this.subtract();
+        if(this.operation === '/') this.divide();
+        if(this.operation === '*') this.multiply();
     }
 };
 
-
 calculatorBodyEl.addEventListener('click', e => {
-    // when number is clicked
     if(e.target.classList.contains('calculator__num')) {
-        if(calculator.operation) {
-            calculator.arrNumber2.push(e.target.textContent);
-        } else {
-            calculator.arrNumber1.push(e.target.textContent);
-            console.log(calculator.arrNumber1, 'calc num when clicked')
-        }
-    } else if (e.target.classList.contains('calculator__operation')) {
-        // operation should not work if num1 is empty
-        if(calculator.arrNumber1.length === 0) return;
-        // if number 2 already selected, perform operation after operation is clicked again
-        if(calculator.arrNumber2.length === 0) {
-            calculator.operation = e.target.textContent;
-        } else {
-            // console.log('add op')
-            calculator.operate(e.target.textContent);
-        }
-    } else if (e.target.classList.contains('calculator__clear')) {
-        calculator.clearAll();
-    } else if (
-        e.target.classList.contains('calculator__neg-pos') ||
-        e.target.closest('div').classList.contains('calculator__neg-pos')
-    ) {
-        console.log('neg/pos')
-    } else if (e.target.classList.contains('calculator__decimal')) {
-        if(calculator.arrNumber1.length > 0) {
-            // format arr to a number
-            calculator.formatArrToNumber();
+        // add number clicked to first number array
+        if(!calculator.operation) calculator.arrNumber1.push(e.target.textContent);
 
-            if(Number.isInteger(calculator.number1)) {
-                calculator.arrNumber1.push('.');
-            } else {
-                console.log('no more decimals');
-                return
-            }
-            
-            if (
-                Number.isInteger(calculator.number2) &&
-                calculator.operation
-            ) {
-                calculator.arrNumber2.push('.');
-            } else {
-                console.log('no more decimals');
-                return
-            }
-        }
-    } else if (e.target.classList.contains('calculator__equal')) {
-        calculator.operate();
+        // add number clickes to second number array
+        if(calculator.operation) calculator.arrNumber2.push(e.target.textContent);
+
+    } 
+    
+    if (e.target.classList.contains('calculator__operation')) {
+        // if nothing is in number 1 array, do nothing
+        if(calculator.arrNumber1.length === 0) return
         
+        // allow no changes in operation, till computed
+        if(calculator.operation) return
+
+        // if number 2 has an explict value, then compute first
+        if(calculator.number2) calculator.compute();
+
+        calculator.operation = e.target.textContent;
+    }
+
+    if (e.target.classList.contains('calculator__equal')) {
+        // format arrays to numbers first if possible
+        calculator.formatArrToNumber();
+
+        // check if all values needed for calcualtion are present
+        if(
+            calculator.number1 &&
+            calculator.number2 &&
+            calculator.operation
+        ) {
+            calculator.compute();
+        }
     }
 })
-
