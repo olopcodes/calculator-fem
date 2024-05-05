@@ -33,6 +33,15 @@ const calculator = {
         } 
     },
 
+    clearAll() {
+        this.arrNumber1 = [];
+        this.arrNumber2 = [];
+        this.number1 = null;
+        this.number2 = null;
+        this.result = 0;
+        this.operation = '';
+    },
+
     compute() {
         if(this.operation === '+') this.sum();
         if(this.operation === '-') this.subtract();
@@ -75,6 +84,51 @@ calculatorBodyEl.addEventListener('click', e => {
             calculator.operation
         ) {
             calculator.compute();
+        }
+    }
+
+    if(e.target.classList.contains('calculator__decimal')) {
+        
+        if(!calculator.operation && calculator.arrNumber1.indexOf('.') === -1) {
+            calculator.arrNumber1.push('.');
+        }
+
+        if(calculator.operation && calculator.arrNumber2.indexOf('.') === -1) {
+            calculator.arrNumber2.push('.');
+        }
+    }
+
+    if(e.target.classList.contains('calculator__backspace')) {
+        if(
+            !calculator.operation &&
+            calculator.arrNumber1.length > 0
+        ) {
+            calculator.arrNumber1.pop();
+        }
+
+        if(
+            calculator.operation &&
+            calculator.arrNumber2.length > 0
+        ) {
+            calculator.arrNumber2.pop();
+        }
+    }
+
+    if(e.target.classList.contains('calculator__clear')) {
+       calculator.clearAll();
+    }
+
+    if(e.target.classList.contains('calculator__neg-pos') ||
+        e.target.closest('div').classList.contains('calculator__neg-pos')
+    ) {
+        if(!calculator.operation && 
+            calculator.arrNumber1.length === 0
+        ) {
+            calculator.arrNumber1.push('-')
+        }
+
+        if(calculator.operation && calculator.arrNumber2.length === 0){
+            calculator.arrNumber2.push('-')
         }
     }
 })
