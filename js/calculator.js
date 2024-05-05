@@ -1,5 +1,7 @@
 const calculatorBodyEl = document.querySelector('.calculator__body');
 const calculatorOutputEl = document.querySelector('.calculator__output');
+const calculatorResultEl = document.querySelector('.calculator__result');
+
 const calculator = {
     number1: [],
     number2: [],
@@ -29,7 +31,30 @@ const calculator = {
     },
 
     operate() {
+        if(this.operation === '+') {
+            this.sum();
+        } else if (this.operation === 'sub') {
+            this.subtract();
+        } else if (this.operation === 'div') {
+            this.divide();
+        } else if (this.operation === 'mul') {
+            this.multiply();
+        }
 
+        // fixing the number values after calculating
+        this.number1 = this.number1.push(this.result);
+        this.number2 = [];
+        this.result = 0;
+    },
+
+    clearAll() {
+        // clearing values
+        calculator.number1 = [];
+        calculator.number2 = [];
+        calculator.operation = '';
+        calculator.result = 0;
+        calculatorOutputEl.textContent = '';
+        calculatorResultEl.textContent = '';
     }
 };
 
@@ -48,9 +73,7 @@ calculatorBodyEl.addEventListener('click', e => {
         // if number 2 already selected, perform operation after operation is clicked again
         calculator.operate();
     } else if (e.target.classList.contains('calculator__clear')) {
-        calculator.number1 = [];
-        calculator.number2 = [];
-        calculator.result = 0;
+        calculator.clearAll();
     } else if (
         e.target.classList.contains('calculator__neg-pos') ||
         e.target.closest('div').classList.contains('calculator__neg-pos')
@@ -58,5 +81,9 @@ calculatorBodyEl.addEventListener('click', e => {
         console.log('neg/pos')
     } else if (e.target.classList.contains('calculator__decimal')) {
         console.log('decimal')
+    } else if (e.target.classList.contains('calculator__equal')) {
+        calculator.operate();
+        
     }
 })
+
