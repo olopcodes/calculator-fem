@@ -47,6 +47,17 @@ const calculator = {
         if(this.operation === '-') this.subtract();
         if(this.operation === '/') this.divide();
         if(this.operation === '*') this.multiply();
+
+        this.formatAfterCompute();
+    },
+
+    formatAfterCompute() {
+        this.arrNumber1 = [this.result];
+        this.arrNumber2 = [];
+        this.number1 = this.result;
+        this.number2 = 0;
+        this.operation = '';
+        this.result = 0;
     }
 };
 
