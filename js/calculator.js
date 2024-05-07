@@ -1,6 +1,8 @@
 const calculatorBodyEl = document.querySelector('.calculator__body');
-const calculatorOutputEl = document.querySelector('.calculator__output');
+const calculatorDisplayEl = document.querySelector('.calculator__display');
 const calculatorResultEl = document.querySelector('.calculator__result');
+let displayHTML = '';
+
 const calculator = {
     arrNumber1: [],
     arrNumber2: [],
@@ -48,7 +50,11 @@ const calculator = {
         if(this.operation === '/') this.divide();
         if(this.operation === '*') this.multiply();
 
+
         this.formatAfterCompute();
+
+        // this.formatDecimal();
+
     },
 
     formatAfterCompute() {
@@ -58,6 +64,13 @@ const calculator = {
         this.number2 = 0;
         this.operation = '';
         this.result = 0;
+    },
+
+    formatDecimal(){
+        if(!Number.isInteger(this.result)) this.result = this.result.toFixed(2);
+        if(!Number.isInteger(this.number1)) this.number1 = this.number1.toFixed(2);
+        if(!Number.isInteger(this.number2)) this.number2 = this.number2.toFixed(2);
+
     }
 };
 
@@ -68,6 +81,11 @@ calculatorBodyEl.addEventListener('click', e => {
 
         // add number clickes to second number array
         if(calculator.operation) calculator.arrNumber2.push(e.target.textContent);
+
+        displayHTML += e.target.textContent;
+        calculatorDisplayEl.innerHTML = displayHTML;
+
+        calculatorResultEl.innerHTML += e.target.textContent;
 
     } 
     
@@ -82,6 +100,11 @@ calculatorBodyEl.addEventListener('click', e => {
         if(calculator.number2) calculator.compute();
 
         calculator.operation = e.target.textContent;
+
+        displayHTML += ` ${e.target.textContent}`;
+        calculatorDisplayEl.innerHTML = displayHTML;
+
+        calculatorResultEl.innerHTML = '';
     }
 
     if (e.target.classList.contains('calculator__equal')) {
@@ -95,6 +118,10 @@ calculatorBodyEl.addEventListener('click', e => {
             calculator.operation
         ) {
             calculator.compute();
+
+            calculatorResultEl.innerHTML = '';
+            // show the result of the number computed
+            calculatorResultEl.innerHTML = calculator.number1;
         }
     }
 
@@ -109,12 +136,22 @@ calculatorBodyEl.addEventListener('click', e => {
         }
     }
 
+    // fix the backspace function, should split number and remove one character, not the whole number like it does now 
     if(e.target.classList.contains('calculator__backspace')) {
         if(
             !calculator.operation &&
             calculator.arrNumber1.length > 0
         ) {
             calculator.arrNumber1.pop();
+        }
+
+        if(calculator.operation && calculator.arrNumber2.length === 0) {
+            calculator.operation = '';
+            // remove operation from html
+            displayHTML = displayHTML.slice(0, displayHTML.length-1);
+            // update display on screen
+            calculatorDisplayEl.innerHTML = displayHTML;
+
         }
 
         if(
@@ -127,6 +164,9 @@ calculatorBodyEl.addEventListener('click', e => {
 
     if(e.target.classList.contains('calculator__clear')) {
        calculator.clearAll();
+       calculatorDisplayEl.innerHTML = '';
+       displayHTML = '';
+       calculatorResultEl.innerHTML = '';
     }
 
     if(e.target.classList.contains('calculator__neg-pos') ||
