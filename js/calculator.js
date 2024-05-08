@@ -142,7 +142,14 @@ calculatorBodyEl.addEventListener('click', e => {
             !calculator.operation &&
             calculator.arrNumber1.length > 0
         ) {
-            calculator.arrNumber1.pop();
+            // calculator.arrNumber1.pop();
+            const strNum = String(calculator.arrNumber1.join(''));
+            const newNum = Number(strNum.slice(0, strNum.length-1));
+            calculator.arrNumber1 = [];
+            calculator.arrNumber1.push(newNum);
+            displayHTML = newNum;
+            calculatorDisplayEl.innerHTML = displayHTML;
+            calculatorResultEl.innerHTML = newNum;
         }
 
         if(calculator.operation && calculator.arrNumber2.length === 0) {
@@ -158,10 +165,15 @@ calculatorBodyEl.addEventListener('click', e => {
             calculator.operation &&
             calculator.arrNumber2.length > 0
         ) {
-            calculator.arrNumber2.pop();
+            const strNum = String(calculator.arrNumber2.join(''));
+            const newNum = Number(strNum.slice(0, strNum.length-1));
+            calculator.arrNumber2 = [];
+            calculator.arrNumber2.push(newNum);
+            displayHTML = newNum;
+            calculatorDisplayEl.innerHTML = displayHTML;
+            calculatorResultEl.innerHTML = newNum;
+            }
         }
-    }
-
     if(e.target.classList.contains('calculator__clear')) {
        calculator.clearAll();
        calculatorDisplayEl.innerHTML = '';
